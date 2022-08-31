@@ -8,7 +8,7 @@ export default function BlogId({ blog }) {
       <p className={styles.publishedAt}>{blog.publishedAt}</p>
       <div
         dangerouslySetInnerHTML={{
-          __html: `${blog.body}`,
+          __html: `${blog.content}`,
         }}
         className={styles.post}
       />
@@ -16,7 +16,7 @@ export default function BlogId({ blog }) {
   );
 }
 
-// 静的生成のためのパスを指定します
+// 静的生成のためのパスを指定
 export const getStaticPaths = async () => {
   const data = await client.get({ endpoint: "blogs" });
 
@@ -24,11 +24,12 @@ export const getStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-// データをテンプレートに受け渡す部分の処理を記述します
+// データをテンプレートに受け渡す部分の処理を記述
 export const getStaticProps = async (context) => {
   const id = context.params.id;
   const data = await client.get({ endpoint: "blogs", contentId: id });
-
+console.log(data);
+console.log("⚡️");
   return {
     props: {
       blog: data,
