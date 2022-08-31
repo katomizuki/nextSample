@@ -2,11 +2,10 @@ import { client } from "../../libs/client";
 import styles from '../../styles/Home.module.scss';
 import type { Blog } from '../../types/blog'
 
-export default function BlogId({ blog }: { blog: Blog }) {
+export default function BlogId({ blog }:{ blog: Blog }) {
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>{blog.title}</h1>
-      <p className={styles.publishedAt}>{blog.category}</p>
       <div
         dangerouslySetInnerHTML={{
           __html: `${blog.content}`,
@@ -29,8 +28,6 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: any) => {
   const id = context.params.id;
   const data = await client.get({ endpoint: "blogs", contentId: id });
-console.log(data);
-console.log("⚡️");
   return {
     props: {
       blog: data,
